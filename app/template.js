@@ -25,8 +25,8 @@ function classNames(...classes) {
 }
 export default function Template({ children }) {
     return (
-        <div className="min-h-full">
-            <Disclosure as="nav" className="bg-neutral-800">
+        <div className="min-h-full bg-gray-100">
+            <Disclosure as="nav" className="bg-neutral-800 fixed z-50 w-full">
                 {({ open }) => (
                     <>
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -193,7 +193,7 @@ export default function Template({ children }) {
                 </div>
             </header>
             <main>
-                <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl py-6 pt-0 sm:px-6 lg:px-8">
                     {children}
                 </div>
             </main>

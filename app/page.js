@@ -1,3 +1,4 @@
+'use client'
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -20,13 +21,20 @@ let conversation = [
   {
     "role": "assistant",
     "content": "In the moon's soft glow, a piano's melody echoed through ancient cobblestone streets. Shadows danced to the rhythm, unveiling a tale of forgotten romances and clandestine rendezvous."
-  }  
+  },
+  {
+    "role": "user",
+    "content": "Moonlit serenades and whispers of the night, entwined with the symphony of silence. Share your favorite nocturnal tale."
+  },
+  {
+    "role": "assistant",
+    "content": "In the moon's soft glow, a piano's melody echoed through ancient cobblestone streets. Shadows danced to the rhythm, unveiling a tale of forgotten romances and clandestine rendezvous."
+  }
 ]
 export default function Chat() {
   return (
-    <div className="flex flex-col relative w-full">
-
-      <div className="w-full max-w-4xl py-6 mx-auto flex-col gap-6 flex">
+    <div className="flex flex-col-reverse relative w-full bg-gray-100 overflow-hidden justify-end">
+      <div className="w-full max-w-4xl py-6 mb-20 mx-auto flex-col flex-grow flex-shrink mt-16 justify-end gap-6 flex">
         {conversation.map((item, key) => (
           <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
             <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
@@ -40,17 +48,18 @@ export default function Chat() {
           </div>
         ))}
       </div>
-
-      <div className="bg-white border border-gray-300 shadow-md rounded-2xl w-full max-w-4xl p-4 mx-auto flex flex-row gap-4 items-center">
-        <img className="w-8 h-8 rounded-full bg-gray-300" src={user.imageUrl} alt={user.name} />
-        <input className="overflow-y-scroll outline-none resize-none border-none w-full text-base leading-6" placeholder="Chat with Delta..." rows="1" />
-        <div className="text-2xl self-end w-6 h-6 m-1 text-gray-600 transition-colors cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-          </svg>
+      <div className="fixed bottom-0 bg-gray-100 py-2 w-full inset-x-0">
+        <div className="bg-white border border-gray-300 shadow-md rounded-2xl w-full max-w-4xl p-4 mx-auto flex flex-row gap-4 items-center">
+          <img className="w-8 h-8 rounded-full bg-gray-300" src={user.imageUrl} alt={user.name} />
+          <input className="overflow-y-scroll outline-none resize-none border-none w-full text-base leading-6" placeholder="Chat with Delta..." rows="1" />
+          <div className="text-2xl self-end w-6 h-6 m-1 text-gray-600 transition-colors cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+            </svg>
+          </div>
         </div>
+        <div class="text-center pt-2 text-sm text-gray-500/90 font-medium">Delta is still in Beta testing and may make mistakes. You are using the standard (free) tier.&nbsp;<a class="cursor-pointer underline" href="#" target="_blank" rel="noreferrer">Learn more</a></div>
       </div>
-      <div class="text-center pt-2 text-sm text-gray-500/90 font-medium">Delta is still in Beta testing and may make mistakes. You are using the standard (free) tier.&nbsp;<a class="cursor-pointer underline" href="#" target="_blank" rel="noreferrer">Learn more</a></div>
     </div>
   );
 }
