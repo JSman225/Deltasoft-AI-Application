@@ -34,7 +34,7 @@ let conversation = [
 export default function Chat() {
   return (
     <div className="flex flex-col-reverse relative w-full bg-gray-100 overflow-hidden justify-end">
-      <div className="w-full max-w-4xl py-6 mb-20 mx-auto flex-col flex-grow flex-shrink mt-16 justify-end gap-6 flex">
+      <div className="w-full max-w-4xl py-6 px-3 mb-24 sm:mb-20 mx-auto flex-col flex-grow flex-shrink mt-16 justify-end gap-6 flex">
         {conversation.map((item, key) => (
           <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
             <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
@@ -48,8 +48,8 @@ export default function Chat() {
           </div>
         ))}
       </div>
-      <div className="fixed bottom-0 bg-gray-100 py-2 w-full inset-x-0">
-        <div className="bg-white border border-gray-300 shadow-md rounded-2xl w-full max-w-4xl p-4 mx-auto flex flex-row gap-4 items-center">
+      <div className="fixed bottom-0 bg-gray-100 py-2 px-3 w-full inset-x-0">
+        <div className="bg-white border  border-gray-300 shadow-md rounded-2xl w-full max-w-4xl p-4 mx-auto flex flex-row gap-4 items-center">
           <img className="w-8 h-8 rounded-full bg-gray-300" src={user.imageUrl} alt={user.name} />
           <input className="overflow-y-scroll outline-none resize-none border-none w-full text-base leading-6" placeholder="Chat with Delta..." rows="1" />
           <div className="text-2xl self-end w-6 h-6 m-1 text-gray-600 transition-colors cursor-pointer">
