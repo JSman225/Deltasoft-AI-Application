@@ -1,4 +1,12 @@
 'use client'
+import { OpenAI } from 'openai';
+
+// Create a OpenAI connection
+const openai = new OpenAI({
+  apiKey: "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",
+  dangerouslyAllowBrowser: true
+});
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -6,32 +14,49 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 let conversation = [
-  {
-    "role": "user",
-    "content": "Vivid dreams under starry skies, chasing galaxies in my sleep. Do you ever feel the cosmic embrace?"
-  },
-  {
-    "role": "assistant",
-    "content": "Absolutely, the universe whispers in every dream. Celestial melodies guide us through the night, revealing the secrets written in stardust."
-  },
-  {
-    "role": "user",
-    "content": "Moonlit serenades and whispers of the night, entwined with the symphony of silence. Share your favorite nocturnal tale."
-  },
-  {
-    "role": "assistant",
-    "content": "In the moon's soft glow, a piano's melody echoed through ancient cobblestone streets. Shadows danced to the rhythm, unveiling a tale of forgotten romances and clandestine rendezvous."
-  },
-  {
-    "role": "user",
-    "content": "Moonlit serenades and whispers of the night, entwined with the symphony of silence. Share your favorite nocturnal tale."
-  },
-  {
-    "role": "assistant",
-    "content": "In the moon's soft glow, a piano's melody echoed through ancient cobblestone streets. Shadows danced to the rhythm, unveiling a tale of forgotten romances and clandestine rendezvous."
-  }
-]
+
+];
+/*
+  async function connectDb() {
+    await db.connect();
+  } connectDb();*/
+
+async function getDb(input) {
+  const value = await db.get(input);
+  return JSON.parse(value);
+}
+
+//console.log((await getDb('916043469552758784')));
+//await db.connect();
+//await db.set('916043469552758784',JSON.stringify(json))
+/*async function test() {
+  const value = await db.get('916043469552758784');
+  console.log(JSON.parse(value));
+
+} test();*/
+let thread;
+async function getMessageList() {
+  const resp = await fetch(`http://localhost:3000/api?id=916043469552758784`, { cache: 'no-store' });
+  const reps1 = await resp.json();
+  const userInfo = JSON.parse(reps1.results);
+  console.log(userInfo);
+  thread = await openai.beta.threads.retrieve(
+    userInfo.thread_id
+  );
+  const messages = await openai.beta.threads.messages.list(thread.id);
+  // Find the last message for the current run
+  const lastMessageForRun = messages.data;
+  console.log(lastMessageForRun);
+  lastMessageForRun.map((item) => {
+    conversation.push({
+      role: item.role,
+      content: item.content[0].text.value
+    })
+  })
+  console.log(conversation);
+} getMessageList();
 export default function Chat() {
+
   return (
     <div className="flex flex-col-reverse relative w-full bg-gray-100 overflow-hidden justify-end">
       <div className="w-full max-w-4xl py-6 px-3 mb-24 sm:mb-20 mx-auto flex-col flex-grow flex-shrink mt-16 justify-end gap-6 flex">
@@ -58,7 +83,7 @@ export default function Chat() {
             </svg>
           </div>
         </div>
-        <div class="text-center pt-2 text-sm text-gray-500/90 font-medium">Delta is still in Beta testing and may make mistakes. You are using the standard (free) tier.&nbsp;<a class="cursor-pointer underline" href="#" target="_blank" rel="noreferrer">Learn more</a></div>
+        <div className="text-center pt-2 text-sm text-gray-500/90 font-medium">Delta is still in Beta testing and may make mistakes. You are using the standard (free) tier.&nbsp;<a className="cursor-pointer underline" href="#" target="_blank" rel="noreferrer">Learn more</a></div>
       </div>
     </div>
   );
