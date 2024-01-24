@@ -25,13 +25,29 @@ export async function Refresh(setConversation) {
 }
 
 export default function ChatContainer() {
-    const { conversation, setConversation } = useChatContext()  || {};
+    const { conversation, setConversation } = useChatContext() || {};
 
 
     useEffect(() => {
         // Scroll to the bottom when the component mounts
         scroll.scrollToBottom({ smooth: true, duration: 500 });
-      }, [conversation]);
+
+        if (conversation.length > 0) {
+            conversationElement = conversation.map((item, key) => (
+                // your mapping logic
+                <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
+                    <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
+                        <img className="rounded-full bg-white border border-gray-300 w-full h-full shadow-md object-cover" src={item.role === "user" ? user.imageUrl : (item.role === "assistant" && "/deltasoftai.png")} alt="" />
+                    </div>
+                    <div className={`border break-words border-gray-300 shadow-md p-4 rounded-2xl font-medium ${item.role === "user" ? "bg-white text-neutral-700" : (item.role === "assistant" && "bg-neutral-800 text-neutral-300")}`}>
+                        <p>
+                            {item.content}
+                        </p>
+                    </div>
+                </div>
+            ));
+        }
+    }, [conversation]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -82,21 +98,6 @@ export default function ChatContainer() {
         </>
     );
 
-    if (conversation.length > 0) {
-        conversationElement = conversation.map((item, key) => (
-            // your mapping logic
-            <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
-                <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
-                    <img className="rounded-full bg-white border border-gray-300 w-full h-full shadow-md object-cover" src={item.role === "user" ? user.imageUrl : (item.role === "assistant" && "/deltasoftai.png")} alt="" />
-                </div>
-                <div className={`border break-words border-gray-300 shadow-md p-4 rounded-2xl font-medium ${item.role === "user" ? "bg-white text-neutral-700" : (item.role === "assistant" && "bg-neutral-800 text-neutral-300")}`}>
-                    <p>
-                        {item.content}
-                    </p>
-                </div>
-            </div>
-        ));
-    }
     return (
         <>
             {conversationElement}
