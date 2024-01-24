@@ -25,7 +25,7 @@ export async function Refresh(setConversation) {
 }
 
 export default function ChatContainer() {
-    const { conversation, setConversation } = useChatContext();
+    const { conversation, setConversation } = useChatContext()  || {};
 
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function ChatContainer() {
         };
 
         fetchData();
-    }, []); // Empty dependency array ensures it runs only once on component mount
+    }); // Empty dependency array ensures it runs only once on component mount
 
     let conversationElement = (
         <>

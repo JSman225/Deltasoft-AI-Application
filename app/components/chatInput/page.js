@@ -11,7 +11,7 @@ const user = {
 
 
 export default function ChatInput() {
-    const { setConversation } = useChatContext();
+    const { setConversation } = useChatContext() || {};
     async function refreshContent() {
         Refresh(setConversation);
     }
