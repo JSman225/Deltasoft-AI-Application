@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
-import { useChatContext } from "../chatContext/page";
+import { useChatContext } from "../chat-context/chatContext";
 
 const user = {
     name: 'Tom Cook',

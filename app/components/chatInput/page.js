@@ -1,6 +1,6 @@
 'use client'
 import { Refresh } from "../chatContainer/page";
-import { useChatContext } from "../chatContext/page";
+import { useChatContext } from "../chat-context/chatContext";
 
 const user = {
     name: 'Tom Cook',
