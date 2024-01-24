@@ -1,7 +1,7 @@
 'use client'
 import ChatContainer from "./components/chatContainer/page";
 import ChatInput from "./components/chatInput/page";
-import { ChatProvider } from "./components/chatContext/chatContext";
+import { ChatProvider } from "./components/chatContext/page";
 
 const user = {
   name: 'Tom Cook',

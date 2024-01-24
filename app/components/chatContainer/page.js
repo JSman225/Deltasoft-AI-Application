@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
-import { useChatContext } from "../chatContext/chatContext";
+import { useChatContext } from "../chatContext/page";
 
 const user = {
     name: 'Tom Cook',
@@ -11,7 +11,7 @@ const user = {
 }
 
 export async function fetchConvo() {
-    const ConvoResp = await fetch(`http://localhost:3000/api/fetchConvo?id=916043469552758784`, { cache: 'no-store' });
+    const ConvoResp = await fetch(`/api/fetchConvo?id=916043469552758784`, { cache: 'no-store' });
     const Convo = ConvoResp.json();
     // console.log(initConvo);
     return Convo;
