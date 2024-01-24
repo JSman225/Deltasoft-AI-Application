@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect } from "react";
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { useChatContext } from "../chatContext/chatContext";
+
 const user = {
     name: 'Tom Cook',
     email: 'tom@example.com',
@@ -16,13 +18,14 @@ export async function fetchConvo() {
 }
 
 
-export async function Refresh(){
-    const Convo = await fetchConvo(); //dont worry about the fetchConvo() function I know it works
+// Assuming Refresh is in the same file as ChatContainer
+export async function Refresh(setConversation) {
+    const Convo = await fetchConvo();
     setConversation(Convo);
 }
 
 export default function ChatContainer() {
-    const [conversation, setConversation] = useState([]);
+    const { conversation, setConversation } = useChatContext();
 
 
     useEffect(() => {
