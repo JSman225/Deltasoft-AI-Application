@@ -1,23 +1,23 @@
 'use server';
 import { createClient } from 'redis';
 import { OpenAI } from 'openai';
+ // Create a Redis client with the given credentials
+ const db = createClient({
+    password: process.env.REDIS_PW,
+    socket: {
+        host: 'redis-15284.c321.us-east-1-2.ec2.cloud.redislabs.com',
+        port: 15284
+    }
+});
 
+// Create an OpenAI connection with the given API key
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+});
+// Connect to redis db
 export default async function handleMessage(content) {
-    // Create a Redis client with the given credentials
-    const db = await createClient({
-        password: process.env.REDIS_PW,
-        socket: {
-            host: 'redis-15284.c321.us-east-1-2.ec2.cloud.redislabs.com',
-            port: 15284
-        }
-    });
-
-    // Create an OpenAI connection with the given API key
-    const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-        dangerouslyAllowBrowser: true
-    });
-    // Connect to redis db
+   
     db.connect();
 
     async function getDb(input) {

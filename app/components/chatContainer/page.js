@@ -73,6 +73,7 @@ export default function ChatContainer({ conversation, setConversation }) {
 
 
     useEffect(() => {
+        console.log('i ran now')
         async function awaitMessages() {
             var convoMap = await conversation;
             conversationElement = convoMap.map((item, key) => (
