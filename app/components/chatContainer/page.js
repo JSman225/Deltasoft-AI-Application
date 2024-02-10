@@ -1,6 +1,17 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { okaidia } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+
+const CodeBlock = ({ children }) => {
+    return (
+        <SyntaxHighlighter language="jsx" style={okaidia}>
+            {children}
+        </SyntaxHighlighter>
+    );
+};
 
 const user = {
     name: 'Tom Cook',
@@ -71,13 +82,8 @@ export default function ChatContainer({ conversation, setConversation }) {
         console.log(conversation);
     }, [conversation]);
 
-
-    useEffect(() => {
-        console.log('i ran now')
-        async function awaitMessages() {
-            var convoMap = await conversation;
-            conversationElement = convoMap.map((item, key) => (
-                <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
+    /*
+                    <div key={key} className={`flex gap-3 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
                     <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
                         <img className="rounded-full bg-white border border-gray-300 w-full h-full shadow-md object-cover" src={item.role === "user" ? user.imageUrl : (item.role === "assistant" && "/deltasoftai.png")} alt="" />
                     </div>
@@ -87,11 +93,36 @@ export default function ChatContainer({ conversation, setConversation }) {
                         </p>
                     </div>
                 </div>
-            ));
+                */
+
+    useEffect(() => {
+        console.log('i ran now')
+        async function awaitMessages() {
+            var convoMap = await conversation;
+            conversationElement = await convoMap.map((item, key) => (
+                console.log('Raw content:', item.content),
+                <div key={key} className={`flex gap-4 ${item.role === "user" ? "flex-row-reverse" : (item.role === "assistant" && "flex-row")}`}>
+                    <div className="w-10 h-10 flex-none bg-white border border-gray-300 shadow-md rounded-full">
+                        <img className="rounded-full bg-white border border-gray-300 w-full h-full shadow-md object-cover" src={item.role === "user" ? user.imageUrl : (item.role === "assistant" && "/deltasoftai.png")} alt="" />
+                    </div>
+                    <div className={`border-none pt-2 break-words font-medium text-neutral-700`}>
+                        <ReactMarkdown
+                            components={{
+                                code: CodeBlock,
+                                // Add more components as needed
+                            }}
+                        >
+                            {item.content}
+                        </ReactMarkdown>
+                    </div>
+                </div>
+               ));
             setConvoElement(conversationElement);
-        } awaitMessages();
+        }
+        awaitMessages();
         console.log(conversation);
     }, [conversation, setConvoElement]);
+
 
     return (
         <>

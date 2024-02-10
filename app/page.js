@@ -15,7 +15,7 @@ export default function Chat() {
   const [conversation, setConversation] = useState([]);
   return (
     <div className="flex flex-col-reverse relative w-full bg-gray-100 overflow-hidden justify-end">
-      <div className="w-full max-w-4xl py-6 px-3 mb-24 sm:mb-20 mx-auto flex-col-reverse flex-grow flex-shrink mt-16 justify-end gap-6 flex">
+      <div className="w-full max-w-4xl py-6 px-3 mb-24 sm:mb-20 mx-auto flex-col-reverse flex-grow flex-shrink mt-16 justify-end gap-12 flex">
         <ChatContainer conversation={conversation} setConversation={setConversation} />
       </div>
       <div className="fixed bottom-0 bg-gray-100 py-2 px-3 w-full inset-x-0">
